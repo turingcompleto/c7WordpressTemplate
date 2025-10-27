@@ -162,7 +162,7 @@ get_header(); ?>
 
 <!-- About Section -->
 <section class="about-section">
-    <div class="about-image" style="background-image: url('<?php echo get_template_directory_uri(); ?>/images/about-bg.jpg');"></div>
+    <div class="about-image" style="background-image: url('https://c7estudio.esuntipazo.com/wp-content/uploads/2019/01/Residencia-Cerro-de-la-Luz-221-FHD-Render-9-scaled.png');"></div>
     
     <div class="about-content">
         <h2 class="fade-in">About Us</h2>
