@@ -1,5 +1,6 @@
 (function($) {
     'use strict';
+
     // ==========================================
     // VARIABLES GLOBALES
     // ==========================================
@@ -56,6 +57,7 @@
             $('body').removeClass('menu-open');
         });
 
+        // Cerrar menú al hacer clic fuera
         $(document).on('click', function(e) {
             if ($('body').hasClass('menu-open')) {
                 if (!$(e.target).closest('.main-navigation').length && 
@@ -67,6 +69,7 @@
             }
         });
 
+        // Cerrar menú con ESC
         $(document).on('keydown', function(e) {
             if (e.keyCode === 27 && $('.main-navigation').hasClass('active')) {
                 $('.menu-toggle').removeClass('active');
@@ -134,6 +137,11 @@
                         ease: "power2.out",
                         delay: 0.1
                     });
+                } else {
+                    $image.css({
+                        'transform': 'scale(1.08)',
+                        'transition': 'transform 1.2s ease'
+                    });
                 }
             });
             
@@ -151,6 +159,8 @@
                         duration: 0.3,
                         ease: "power2.out"
                     });
+                } else {
+                    $image.css('transform', 'scale(1)');
                 }
             });
 
@@ -239,7 +249,7 @@
     }); // End Document Ready
 
     // ==========================================
-    // HERO SLIDER
+    // HERO SLIDER CON EFECTO LÍQUIDO/AGUA
     // ==========================================
     function initHeroSlider() {
         slides = $('.hero-slide');
@@ -303,46 +313,53 @@
         const $currentSlide = slides.eq(currentSlideIndex);
         const $nextSlide = slides.eq(index);
         
+        // Agregar clases de transición
+        $currentSlide.addClass('liquid-transition-out transitioning-out');
+        $nextSlide.addClass('liquid-transition-in');
+        
         if (typeof gsap !== 'undefined') {
-            gsap.to($currentSlide[0], {
-                opacity: 0,
-                scale: 0.95,
-                filter: "blur(20px)",
-                duration: 1,
-                ease: "power2.inOut",
+            // Transición líquida con GSAP
+            const tl = gsap.timeline({
                 onComplete: function() {
-                    $currentSlide.removeClass('active');
-                    gsap.set($currentSlide[0], { clearProps: "all" });
+                    $currentSlide.removeClass('active liquid-transition-out transitioning-out');
+                    $nextSlide.removeClass('liquid-transition-in').addClass('active');
+                    isTransitioning = false;
+                    
+                    // Limpiar efectos
+                    $('.liquid-circle, .water-ripple, .water-drops').remove();
                 }
             });
             
-            gsap.fromTo($nextSlide[0], 
+            // Animación del slide actual (salida)
+            tl.to($currentSlide[0], {
+                duration: 1.5,
+                ease: "power2.inOut"
+            });
+            
+            // Animación del siguiente slide (entrada)
+            tl.fromTo($nextSlide[0],
                 {
-                    opacity: 0,
-                    scale: 1.1,
-                    filter: "blur(20px)"
+                    opacity: 0
                 },
                 {
                     opacity: 1,
-                    scale: 1,
-                    filter: "blur(0px)",
-                    duration: 1.5,
-                    ease: "power2.inOut",
-                    delay: 0.3,
-                    onStart: function() {
-                        $nextSlide.addClass('active');
-                    },
-                    onComplete: function() {
-                        isTransitioning = false;
-                    }
-                }
+                    duration: 1.8,
+                    ease: "power2.inOut"
+                },
+                "-=1.2"
             );
+            
         } else {
-            $currentSlide.removeClass('active');
-            $nextSlide.addClass('active');
-            isTransitioning = false;
+            // Fallback sin GSAP
+            setTimeout(function() {
+                $currentSlide.removeClass('active liquid-transition-out transitioning-out');
+                $nextSlide.removeClass('liquid-transition-in').addClass('active');
+                isTransitioning = false;
+                $('.liquid-circle, .water-ripple, .water-drops').remove();
+            }, 2000);
         }
         
+        // Actualizar dots
         $('.hero-nav-dot').removeClass('active');
         $('.hero-nav-dot').eq(index).addClass('active');
         
@@ -365,7 +382,7 @@
         stopAutoPlay();
         autoPlayInterval = setInterval(function() {
             nextSlide();
-        }, 7000);
+        }, 8000); // 8 segundos para apreciar el efecto líquido
     }
 
     function stopAutoPlay() {
@@ -374,6 +391,9 @@
         }
     }
 
+    // ==========================================
+    // WINDOW LOAD
+    // ==========================================
     $(window).on('load', function() {
         $('.fade-in, .project-card, .section-title').each(function() {
             const elementTop = $(this).offset().top;

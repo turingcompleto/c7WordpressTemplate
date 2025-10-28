@@ -2563,3 +2563,313 @@ html {
         overflow: hidden;
     }
 }
+
+/* ========================================
+   PERMANENT LIQUID SEMICIRCLE OVERLAY
+   ======================================== */
+
+/* Contenedor del semicírculo líquido permanente */
+.liquid-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 700px;
+    height: 700px;
+    transform: translate(-50%, -50%);
+    z-index: 12;
+    pointer-events: none;
+    opacity: 0.8;
+}
+
+/* Semicírculo que gira constantemente */
+.liquid-ring {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    animation: ringRotate 20s linear infinite;
+}
+
+@keyframes ringRotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Arco semicircular con efecto líquido */
+.liquid-arc {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 30px solid transparent;
+    border-top-color: rgba(255, 255, 255, 0.4);
+    border-right-color: rgba(255, 255, 255, 0.3);
+    filter: blur(8px);
+    box-shadow: 
+        inset 0 0 30px rgba(255, 255, 255, 0.3),
+        0 0 40px rgba(255, 255, 255, 0.2);
+}
+
+/* Segundo arco con offset para efecto de profundidad */
+.liquid-arc-2 {
+    position: absolute;
+    top: -15px;
+    left: -15px;
+    right: -15px;
+    bottom: -15px;
+    border-radius: 50%;
+    border: 20px solid transparent;
+    border-top-color: rgba(255, 255, 255, 0.2);
+    border-right-color: rgba(255, 255, 255, 0.15);
+    filter: blur(12px);
+    animation: ringRotate 15s linear infinite reverse;
+}
+
+/* Tercer arco más pequeño */
+.liquid-arc-3 {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    right: 15px;
+    bottom: 15px;
+    border-radius: 50%;
+    border: 15px solid transparent;
+    border-bottom-color: rgba(255, 255, 255, 0.3);
+    border-left-color: rgba(255, 255, 255, 0.2);
+    filter: blur(6px);
+    animation: ringRotate 25s linear infinite;
+}
+
+/* Partículas de agua fluyendo por el arco */
+.water-flow-particle {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background: radial-gradient(
+        circle,
+        rgba(255, 255, 255, 0.9) 0%,
+        rgba(255, 255, 255, 0.5) 50%,
+        transparent 100%
+    );
+    border-radius: 50%;
+    filter: blur(2px);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+}
+
+/* Posicionar partículas en el círculo */
+.water-flow-particle:nth-child(1) {
+    top: -6px;
+    left: 50%;
+    animation: flowAround 8s linear infinite;
+}
+
+.water-flow-particle:nth-child(2) {
+    top: 13%;
+    left: 86%;
+    animation: flowAround 8s linear infinite 1s;
+}
+
+.water-flow-particle:nth-child(3) {
+    top: 50%;
+    left: 100%;
+    animation: flowAround 8s linear infinite 2s;
+}
+
+.water-flow-particle:nth-child(4) {
+    top: 86%;
+    left: 86%;
+    animation: flowAround 8s linear infinite 3s;
+}
+
+.water-flow-particle:nth-child(5) {
+    top: 100%;
+    left: 50%;
+    animation: flowAround 8s linear infinite 4s;
+}
+
+.water-flow-particle:nth-child(6) {
+    top: 86%;
+    left: 13%;
+    animation: flowAround 8s linear infinite 5s;
+}
+
+.water-flow-particle:nth-child(7) {
+    top: 50%;
+    left: 0%;
+    animation: flowAround 8s linear infinite 6s;
+}
+
+.water-flow-particle:nth-child(8) {
+    top: 13%;
+    left: 13%;
+    animation: flowAround 8s linear infinite 7s;
+}
+
+@keyframes flowAround {
+    0% {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+    10% {
+        transform: scale(1.2);
+        opacity: 1;
+    }
+    90% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+}
+
+/* Efecto de ondulación del agua */
+.water-ripple-effect {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    transform: translate(-50%, -50%);
+    filter: blur(3px);
+    animation: pulseRipple 4s ease-in-out infinite;
+}
+
+@keyframes pulseRipple {
+    0%, 100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.3;
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.1);
+        opacity: 0.6;
+    }
+}
+
+/* Gotas que flotan alrededor */
+.floating-drops {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.floating-drop {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: radial-gradient(
+        circle,
+        rgba(255, 255, 255, 0.8) 0%,
+        rgba(255, 255, 255, 0.3) 70%,
+        transparent 100%
+    );
+    border-radius: 50%;
+    filter: blur(1px);
+}
+
+.floating-drop:nth-child(1) {
+    top: 20%;
+    left: 20%;
+    animation: floatDrop 5s ease-in-out infinite;
+}
+
+.floating-drop:nth-child(2) {
+    top: 30%;
+    left: 70%;
+    animation: floatDrop 6s ease-in-out infinite 1s;
+}
+
+.floating-drop:nth-child(3) {
+    top: 60%;
+    left: 25%;
+    animation: floatDrop 5.5s ease-in-out infinite 2s;
+}
+
+.floating-drop:nth-child(4) {
+    top: 70%;
+    left: 75%;
+    animation: floatDrop 6.5s ease-in-out infinite 3s;
+}
+
+.floating-drop:nth-child(5) {
+    top: 45%;
+    left: 50%;
+    animation: floatDrop 5.8s ease-in-out infinite 1.5s;
+}
+
+@keyframes floatDrop {
+    0%, 100% {
+        transform: translateY(0) scale(0.8);
+        opacity: 0.3;
+    }
+    50% {
+        transform: translateY(-30px) scale(1.2);
+        opacity: 0.8;
+    }
+}
+
+/* Brillo interior del círculo */
+.inner-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 70%;
+    height: 70%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background: radial-gradient(
+        circle,
+        rgba(255, 255, 255, 0.1) 0%,
+        transparent 70%
+    );
+    filter: blur(20px);
+    animation: glowPulse 3s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+    0%, 100% {
+        opacity: 0.5;
+        transform: translate(-50%, -50%) scale(1);
+    }
+    50% {
+        opacity: 0.8;
+        transform: translate(-50%, -50%) scale(1.1);
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .liquid-overlay {
+        width: 350px;
+        height: 350px;
+    }
+    
+    .liquid-arc {
+        border-width: 20px;
+          filter: blur(15px);
+    }
+    
+    .liquid-arc-2 {
+        border-width: 15px;
+    }
+    
+    .liquid-arc-3 {
+        border-width: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .liquid-overlay {
+        width: 250px;
+        height: 250px;
+        opacity: 0.6;
+    }
+}
