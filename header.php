@@ -11,62 +11,25 @@
 
 <?php wp_body_open(); ?>
 
-<!-- Loading Screen - Tao Brush Style -->
+<!-- Loading Screen - Liquid Ring (igual al hero) -->
 <div id="loading-screen">
-    <div class="tao-brush-loader">
-        <svg width="140" height="140" viewBox="0 0 140 140">
-            <defs>
-                <!-- Gradiente para efecto de tinta -->
-                <radialGradient id="inkGradient">
-                    <stop offset="0%" style="stop-color:#000;stop-opacity:1" />
-                    <stop offset="70%" style="stop-color:#000;stop-opacity:0.8" />
-                    <stop offset="100%" style="stop-color:#000;stop-opacity:0.3" />
-                </radialGradient>
-                
-                <!-- Filtro para bordes irregulares de brocha -->
-                <filter id="brushEdge">
-                    <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="4" />
-                    <feDisplacementMap in="SourceGraphic" scale="3" />
-                </filter>
-            </defs>
-            
-            <!-- Semicírculo principal estilo brocha -->
-            <g class="tao-main">
-                <path 
-                    d="M 70 20 
-                       C 75 22, 80 25, 85 30
-                       C 95 40, 105 50, 115 65
-                       C 120 75, 120 80, 118 90
-                       L 70 70
-                       Z" 
-                    fill="url(#inkGradient)"
-                    filter="url(#brushEdge)"
-                    opacity="0.95"
-                />
-                
-                <!-- Trazo grueso de brocha -->
-                <path 
-                    d="M 70 20 
-                       A 50 50 0 0 1 118 90" 
-                    fill="none"
-                    stroke="#000"
-                    stroke-width="18"
-                    stroke-linecap="round"
-                    opacity="0.7"
-                />
-                
-                <!-- Trazo fino decorativo -->
-                <path 
-                    d="M 70 20 
-                       A 50 50 0 0 1 118 90" 
-                    fill="none"
-                    stroke="#000"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    opacity="0.3"
-                />
-            </g>
-        </svg>
+    <div class="loader-liquid-overlay">
+        <div class="loader-liquid-ring">
+            <div class="loader-liquid-arc"></div>
+            <div class="loader-liquid-arc-2"></div>
+            <div class="loader-liquid-arc-3"></div>
+        </div>
+        
+        <!-- Ondulación del agua -->
+        <div class="loader-water-ripple-effect"></div>
+        
+        <!-- Brillo interior pulsante -->
+        <div class="loader-inner-glow"></div>
+    </div>
+    
+    <!-- Indicador de progreso -->
+    <div class="loading-progress">
+        <span id="loading-percentage">0%</span>
     </div>
 </div>
 
@@ -81,69 +44,349 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
     z-index: 99999;
-    transition: opacity 0.5s ease;
+    transition: opacity 0.6s ease;
 }
 
-.tao-brush-loader {
-    animation: taoSmoothRotate 2.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-    filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.1));
+#loading-screen.hidden {
+    opacity: 0;
+    pointer-events: none;
 }
 
-.tao-main {
-    transform-origin: 70px 70px;
+/* Contenedor del círculo líquido */
+.loader-liquid-overlay {
+    position: relative;
+    width: 140px;
+    height: 140px;
+    pointer-events: none;
 }
 
-@keyframes taoSmoothRotate {
-    0% { 
-        transform: rotate(0deg);
+/* Anillo que gira constantemente */
+.loader-liquid-ring {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    animation: loaderRingRotate 20s linear infinite;
+}
+
+@keyframes loaderRingRotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Arco semicircular con efecto líquido */
+.loader-liquid-arc {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 20px solid transparent;
+    border-top-color: rgba(0, 0, 0, 0.4);
+    border-right-color: rgba(0, 0, 0, 0.3);
+    filter: blur(8px);
+    box-shadow: 
+        inset 0 0 20px rgba(0, 0, 0, 0.3),
+        0 0 30px rgba(0, 0, 0, 0.2);
+}
+
+/* Segundo arco con offset para efecto de profundidad */
+.loader-liquid-arc-2 {
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    border-radius: 50%;
+    border: 15px solid transparent;
+    border-top-color: rgba(0, 0, 0, 0.2);
+    border-right-color: rgba(0, 0, 0, 0.15);
+    filter: blur(12px);
+    animation: loaderRingRotate 15s linear infinite reverse;
+}
+
+/* Tercer arco más pequeño */
+.loader-liquid-arc-3 {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    border-radius: 50%;
+    border: 12px solid transparent;
+    border-bottom-color: rgba(0, 0, 0, 0.3);
+    border-left-color: rgba(0, 0, 0, 0.2);
+    filter: blur(6px);
+    animation: loaderRingRotate 25s linear infinite;
+}
+
+/* Efecto de ondulación del agua */
+.loader-water-ripple-effect {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 2px solid rgba(0, 0, 0, 0.2);
+    transform: translate(-50%, -50%);
+    filter: blur(3px);
+    animation: loaderPulseRipple 4s ease-in-out infinite;
+}
+
+@keyframes loaderPulseRipple {
+    0%, 100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.3;
     }
-    100% { 
-        transform: rotate(360deg);
+    50% {
+        transform: translate(-50%, -50%) scale(1.1);
+        opacity: 0.6;
     }
+}
+
+/* Brillo interior del círculo */
+.loader-inner-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 70%;
+    height: 70%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background: radial-gradient(
+        circle,
+        rgba(0, 0, 0, 0.1) 0%,
+        transparent 70%
+    );
+    filter: blur(20px);
+    animation: loaderGlowPulse 3s ease-in-out infinite;
+}
+
+@keyframes loaderGlowPulse {
+    0%, 100% {
+        opacity: 0.5;
+        transform: translate(-50%, -50%) scale(1);
+    }
+    50% {
+        opacity: 0.8;
+        transform: translate(-50%, -50%) scale(1.1);
+    }
+}
+
+.loading-progress {
+    margin-top: 40px;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: #999;
+    font-weight: 300;
 }
 </style>
 
 <script>
-// SISTEMA DE 5 NIVELES PARA OCULTAR EL LOADER
+// LOADER REAL - Espera a que todos los recursos se carguen
 (function() {
     var loader = document.getElementById('loading-screen');
-    var hidden = false;
+    var percentageElement = document.getElementById('loading-percentage');
     
+    if (!loader) return;
+    
+    var resourcesTotal = 0;
+    var resourcesLoaded = 0;
+    var isComplete = false;
+    var minimumDisplayTime = 800; // Mínimo 800ms para que se vea la animación
+    var startTime = Date.now();
+    
+    // Función para actualizar el progreso
+    function updateProgress() {
+        if (resourcesTotal === 0) return;
+        
+        var percentage = Math.round((resourcesLoaded / resourcesTotal) * 100);
+        if (percentageElement) {
+            percentageElement.textContent = percentage + '%';
+        }
+        
+        // Si todo está cargado, ocultar el loader
+        if (resourcesLoaded >= resourcesTotal && !isComplete) {
+            completeLoading();
+        }
+    }
+    
+    // Función para ocultar el loader
     function hideLoader() {
-        if (!hidden && loader) {
-            hidden = true;
-            loader.style.opacity = '0';
+        if (!loader) return;
+        
+        var elapsedTime = Date.now() - startTime;
+        var remainingTime = Math.max(0, minimumDisplayTime - elapsedTime);
+        
+        setTimeout(function() {
+            loader.classList.add('hidden');
             setTimeout(function() {
                 if (loader && loader.parentNode) {
                     loader.parentNode.removeChild(loader);
                 }
-            }, 500);
-        }
+            }, 600); // Esperar a que termine la transición
+        }, remainingTime);
     }
     
-    // Nivel 1: Inmediato después de 200ms
-    setTimeout(hideLoader, 200);
-    
-    // Nivel 2: DOMContentLoaded
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', hideLoader);
-    } else {
+    function completeLoading() {
+        isComplete = true;
+        if (percentageElement) {
+            percentageElement.textContent = '100%';
+        }
         hideLoader();
     }
     
-    // Nivel 3: Window load
-    window.addEventListener('load', hideLoader);
-    
-    // Nivel 4: Forzar después de 800ms
-    setTimeout(hideLoader, 800);
-    
-    // Nivel 5: ELIMINAR FORZOSAMENTE después de 1.5 segundos
-    setTimeout(function() {
-        if (loader && loader.parentNode) {
-            loader.parentNode.removeChild(loader);
+    // Contar todos los recursos a cargar
+    function countResources() {
+        // Imágenes
+        var images = document.querySelectorAll('img');
+        resourcesTotal += images.length;
+        
+        // Background images en hero slider
+        var heroImages = document.querySelectorAll('.hero-slide-image');
+        resourcesTotal += heroImages.length;
+        
+        // CSS
+        var stylesheets = document.querySelectorAll('link[rel="stylesheet"]');
+        resourcesTotal += stylesheets.length;
+        
+        // Scripts
+        var scripts = document.querySelectorAll('script[src]');
+        resourcesTotal += scripts.length;
+        
+        // Si no hay recursos, terminar inmediatamente
+        if (resourcesTotal === 0) {
+            resourcesTotal = 1;
+            resourcesLoaded = 1;
         }
-    }, 1500);
+        
+        console.log('Total resources to load:', resourcesTotal);
+    }
+    
+    // Cargar imágenes normales
+    function loadImages() {
+        var images = document.querySelectorAll('img');
+        
+        if (images.length === 0) {
+            resourcesLoaded += 0;
+            updateProgress();
+            return;
+        }
+        
+        images.forEach(function(img) {
+            if (img.complete) {
+                resourcesLoaded++;
+                updateProgress();
+            } else {
+                img.addEventListener('load', function() {
+                    resourcesLoaded++;
+                    updateProgress();
+                });
+                img.addEventListener('error', function() {
+                    resourcesLoaded++;
+                    updateProgress();
+                });
+            }
+        });
+    }
+    
+    // Cargar imágenes de fondo del hero slider
+    function loadBackgroundImages() {
+        var heroImages = document.querySelectorAll('.hero-slide-image');
+        
+        if (heroImages.length === 0) {
+            resourcesLoaded += 0;
+            updateProgress();
+            return;
+        }
+        
+        heroImages.forEach(function(element) {
+            var bgImage = window.getComputedStyle(element).backgroundImage;
+            var imageUrl = bgImage.replace(/url\(['"]?(.*?)['"]?\)/i, '$1');
+            
+            if (imageUrl && imageUrl !== 'none') {
+                var img = new Image();
+                img.onload = function() {
+                    resourcesLoaded++;
+                    updateProgress();
+                };
+                img.onerror = function() {
+                    resourcesLoaded++;
+                    updateProgress();
+                };
+                img.src = imageUrl;
+            } else {
+                resourcesLoaded++;
+                updateProgress();
+            }
+        });
+    }
+    
+    // Cargar stylesheets
+    function loadStylesheets() {
+        var stylesheets = document.querySelectorAll('link[rel="stylesheet"]');
+        
+        stylesheets.forEach(function(link) {
+            // Los CSS generalmente ya están cargados en este punto
+            resourcesLoaded++;
+            updateProgress();
+        });
+    }
+    
+    // Cargar scripts
+    function loadScripts() {
+        var scripts = document.querySelectorAll('script[src]');
+        
+        scripts.forEach(function(script) {
+            // Los scripts generalmente ya están cargados en este punto
+            resourcesLoaded++;
+            updateProgress();
+        });
+    }
+    
+    // Iniciar la carga
+    function init() {
+        countResources();
+        updateProgress();
+        
+        // Cargar todos los recursos
+        loadImages();
+        loadBackgroundImages();
+        loadStylesheets();
+        loadScripts();
+    }
+    
+    // Esperar a que el DOM esté listo
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
+    
+    // Fallback de seguridad: ocultar después de máximo 10 segundos
+    setTimeout(function() {
+        if (!isComplete) {
+            console.warn('Loader fallback: forzando cierre después de 10 segundos');
+            completeLoading();
+        }
+    }, 10000);
+    
+    // También escuchar el evento window.load como backup
+    window.addEventListener('load', function() {
+        // Dar un pequeño delay para asegurar que todo está renderizado
+        setTimeout(function() {
+            if (!isComplete) {
+                resourcesLoaded = resourcesTotal;
+                completeLoading();
+            }
+        }, 200);
+    });
+    
 })();
 </script>
 
