@@ -73,16 +73,6 @@ get_header(); ?>
             <div class="liquid-arc"></div>
             <div class="liquid-arc-2"></div>
             <div class="liquid-arc-3"></div>
-            
-            <!-- Partículas de agua fluyendo -->
-            <div class="water-flow-particle"></div>
-            <div class="water-flow-particle"></div>
-            <div class="water-flow-particle"></div>
-            <div class="water-flow-particle"></div>
-            <div class="water-flow-particle"></div>
-            <div class="water-flow-particle"></div>
-            <div class="water-flow-particle"></div>
-            <div class="water-flow-particle"></div>
         </div>
         
         <!-- Ondulación del agua -->
@@ -90,19 +80,7 @@ get_header(); ?>
         
         <!-- Brillo interior pulsante -->
         <div class="inner-glow"></div>
-        
-        <!-- Gotas flotantes -->
-        <div class="floating-drops">
-            <div class="floating-drop"></div>
-            <div class="floating-drop"></div>
-            <div class="floating-drop"></div>
-            <div class="floating-drop"></div>
-            <div class="floating-drop"></div>
-        </div>
     </div>
-    
-    <!-- Símbolo Tao decorativo -->
-    <div class="tao-symbol">☯</div>
     
     <!-- Scroll Indicator -->
     <div class="scroll-indicator">

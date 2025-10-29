@@ -2080,26 +2080,7 @@ html {
 }
 
 /* Símbolo Tao decorativo */
-.tao-symbol {
-    position: absolute;
-    top: 50%;
-    right: 10vw;
-    transform: translateY(-50%);
-    font-size: 120px;
-    color: rgba(255, 255, 255, 0.03);
-    z-index: 5;
-    animation: taoFloat 8s ease-in-out infinite;
-    pointer-events: none;
-}
-
-@keyframes taoFloat {
-    0%, 100% {
-        transform: translateY(-50%) rotate(0deg);
-    }
-    50% {
-        transform: translateY(-45%) rotate(180deg);
-    }
-}
+/* Símbolo Tao removido */
 
 /* Responsive */
 @media (max-width: 768px) {
@@ -2133,11 +2114,6 @@ html {
         left: 6vw;
         bottom: 40px;
     }
-    
-    .tao-symbol {
-        font-size: 80px;
-        right: 5vw;
-    }
 }
 
 @media (max-width: 480px) {
@@ -2147,10 +2123,6 @@ html {
     
     .hero-content h1 {
         font-size: 32px;
-    }
-    
-    .tao-symbol {
-        display: none;
     }
 }
 
@@ -2643,89 +2615,7 @@ html {
     animation: ringRotate 25s linear infinite;
 }
 
-/* Partículas de agua fluyendo por el arco */
-.water-flow-particle {
-    position: absolute;
-    width: 12px;
-    height: 12px;
-    background: radial-gradient(
-        circle,
-        rgba(255, 255, 255, 0.9) 0%,
-        rgba(255, 255, 255, 0.5) 50%,
-        transparent 100%
-    );
-    border-radius: 50%;
-    filter: blur(2px);
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
-}
-
-/* Posicionar partículas en el círculo */
-.water-flow-particle:nth-child(1) {
-    top: -6px;
-    left: 50%;
-    animation: flowAround 8s linear infinite;
-}
-
-.water-flow-particle:nth-child(2) {
-    top: 13%;
-    left: 86%;
-    animation: flowAround 8s linear infinite 1s;
-}
-
-.water-flow-particle:nth-child(3) {
-    top: 50%;
-    left: 100%;
-    animation: flowAround 8s linear infinite 2s;
-}
-
-.water-flow-particle:nth-child(4) {
-    top: 86%;
-    left: 86%;
-    animation: flowAround 8s linear infinite 3s;
-}
-
-.water-flow-particle:nth-child(5) {
-    top: 100%;
-    left: 50%;
-    animation: flowAround 8s linear infinite 4s;
-}
-
-.water-flow-particle:nth-child(6) {
-    top: 86%;
-    left: 13%;
-    animation: flowAround 8s linear infinite 5s;
-}
-
-.water-flow-particle:nth-child(7) {
-    top: 50%;
-    left: 0%;
-    animation: flowAround 8s linear infinite 6s;
-}
-
-.water-flow-particle:nth-child(8) {
-    top: 13%;
-    left: 13%;
-    animation: flowAround 8s linear infinite 7s;
-}
-
-@keyframes flowAround {
-    0% {
-        transform: scale(0.5);
-        opacity: 0;
-    }
-    10% {
-        transform: scale(1.2);
-        opacity: 1;
-    }
-    90% {
-        transform: scale(1);
-        opacity: 1;
-    }
-    100% {
-        transform: scale(0.5);
-        opacity: 0;
-    }
-}
+/* Partículas de agua removidas */
 
 /* Efecto de ondulación del agua */
 .water-ripple-effect {
@@ -2752,69 +2642,7 @@ html {
     }
 }
 
-/* Gotas que flotan alrededor */
-.floating-drops {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-}
-
-.floating-drop {
-    position: absolute;
-    width: 8px;
-    height: 8px;
-    background: radial-gradient(
-        circle,
-        rgba(255, 255, 255, 0.8) 0%,
-        rgba(255, 255, 255, 0.3) 70%,
-        transparent 100%
-    );
-    border-radius: 50%;
-    filter: blur(1px);
-}
-
-.floating-drop:nth-child(1) {
-    top: 20%;
-    left: 20%;
-    animation: floatDrop 5s ease-in-out infinite;
-}
-
-.floating-drop:nth-child(2) {
-    top: 30%;
-    left: 70%;
-    animation: floatDrop 6s ease-in-out infinite 1s;
-}
-
-.floating-drop:nth-child(3) {
-    top: 60%;
-    left: 25%;
-    animation: floatDrop 5.5s ease-in-out infinite 2s;
-}
-
-.floating-drop:nth-child(4) {
-    top: 70%;
-    left: 75%;
-    animation: floatDrop 6.5s ease-in-out infinite 3s;
-}
-
-.floating-drop:nth-child(5) {
-    top: 45%;
-    left: 50%;
-    animation: floatDrop 5.8s ease-in-out infinite 1.5s;
-}
-
-@keyframes floatDrop {
-    0%, 100% {
-        transform: translateY(0) scale(0.8);
-        opacity: 0.3;
-    }
-    50% {
-        transform: translateY(-30px) scale(1.2);
-        opacity: 0.8;
-    }
-}
+/* Gotas flotantes removidas */
 
 /* Brillo interior del círculo */
 .inner-glow {

@@ -11,13 +11,62 @@
 
 <?php wp_body_open(); ?>
 
-<!-- Loading Screen - Auto Hide Garantizado -->
+<!-- Loading Screen - Tao Brush Style -->
 <div id="loading-screen">
-    <div class="tao-loader">
-        <div class="tao-yin"></div>
-        <div class="tao-yang"></div>
-        <div class="dot-light"></div>
-        <div class="dot-dark"></div>
+    <div class="tao-brush-loader">
+        <svg width="140" height="140" viewBox="0 0 140 140">
+            <defs>
+                <!-- Gradiente para efecto de tinta -->
+                <radialGradient id="inkGradient">
+                    <stop offset="0%" style="stop-color:#000;stop-opacity:1" />
+                    <stop offset="70%" style="stop-color:#000;stop-opacity:0.8" />
+                    <stop offset="100%" style="stop-color:#000;stop-opacity:0.3" />
+                </radialGradient>
+                
+                <!-- Filtro para bordes irregulares de brocha -->
+                <filter id="brushEdge">
+                    <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="4" />
+                    <feDisplacementMap in="SourceGraphic" scale="3" />
+                </filter>
+            </defs>
+            
+            <!-- Semicírculo principal estilo brocha -->
+            <g class="tao-main">
+                <path 
+                    d="M 70 20 
+                       C 75 22, 80 25, 85 30
+                       C 95 40, 105 50, 115 65
+                       C 120 75, 120 80, 118 90
+                       L 70 70
+                       Z" 
+                    fill="url(#inkGradient)"
+                    filter="url(#brushEdge)"
+                    opacity="0.95"
+                />
+                
+                <!-- Trazo grueso de brocha -->
+                <path 
+                    d="M 70 20 
+                       A 50 50 0 0 1 118 90" 
+                    fill="none"
+                    stroke="#000"
+                    stroke-width="18"
+                    stroke-linecap="round"
+                    opacity="0.7"
+                />
+                
+                <!-- Trazo fino decorativo -->
+                <path 
+                    d="M 70 20 
+                       A 50 50 0 0 1 118 90" 
+                    fill="none"
+                    stroke="#000"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    opacity="0.3"
+                />
+            </g>
+        </svg>
     </div>
 </div>
 
@@ -36,57 +85,22 @@
     transition: opacity 0.5s ease;
 }
 
-.tao-loader {
-    position: relative;
-    width: 120px;
-    height: 120px;
-    animation: taoRotate 3s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+.tao-brush-loader {
+    animation: taoSmoothRotate 2.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.1));
 }
 
-.tao-yin {
-    position: absolute;
-    width: 60px;
-    height: 120px;
-    left: 0;
-    background: #000;
-    border-radius: 120px 0 0 120px;
+.tao-main {
+    transform-origin: 70px 70px;
 }
 
-.tao-yang {
-    position: absolute;
-    width: 60px;
-    height: 120px;
-    right: 0;
-    background: #fff;
-    border-radius: 0 120px 120px 0;
-    border: 1px solid #000;
-}
-
-.dot-light {
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    background: #fff;
-    border-radius: 50%;
-    top: 50%;
-    left: 20px;
-    transform: translateY(-50%);
-}
-
-.dot-dark {
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    background: #000;
-    border-radius: 50%;
-    top: 50%;
-    right: 20px;
-    transform: translateY(-50%);
-}
-
-@keyframes taoRotate {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+@keyframes taoSmoothRotate {
+    0% { 
+        transform: rotate(0deg);
+    }
+    100% { 
+        transform: rotate(360deg);
+    }
 }
 </style>
 
