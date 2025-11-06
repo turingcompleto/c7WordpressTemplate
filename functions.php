@@ -38,8 +38,8 @@ add_action('after_setup_theme', 'asmobius_setup');
 
 // Enqueue Styles and Scripts
 function asmobius_scripts() {
-    // Google Fonts - Saira
-    wp_enqueue_style('asmobius-fonts', 'https://fonts.googleapis.com/css2?family=Saira:wght@100;200;300;400;500;600;700;800;900&display=swap', array(), null);
+    // Google Fonts - Nunito Sans
+    wp_enqueue_style('asmobius-fonts', 'https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap', array(), null);
     
     // Styles
     wp_enqueue_style('asmobius-style', get_stylesheet_uri(), array('asmobius-fonts'), '1.0.0');
