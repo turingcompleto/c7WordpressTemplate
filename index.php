@@ -22,9 +22,9 @@ get_header(); ?>
             while ($hero_query->have_posts()) : $hero_query->the_post();
                 $image_url = get_the_post_thumbnail_url(get_the_ID(), 'full');
                 
-                // Si no hay imagen, usar un placeholder
+                // Si no hay imagen, continuar con el siguiente
                 if (!$image_url) {
-                    $image_url = get_template_directory_uri() . '/images/default-hero.jpg';
+                    continue;
                 }
                 
                 $categories = get_the_terms(get_the_ID(), 'project_category');
@@ -67,16 +67,19 @@ get_header(); ?>
         <?php endif; ?>
     </div>
     
-    <!-- Símbolo Tao decorativo -->
-    <div class="tao-symbol">☯</div>
-    
-    <!-- Partículas flotantes -->
-    <div class="hero-particles">
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
+    <!-- OVERLAY LÍQUIDO PERMANENTE -->
+    <div class="liquid-overlay">
+        <div class="liquid-ring">
+            <div class="liquid-arc"></div>
+            <div class="liquid-arc-2"></div>
+            <div class="liquid-arc-3"></div>
+        </div>
+        
+        <!-- Ondulación del agua -->
+        <div class="water-ripple-effect"></div>
+        
+        <!-- Brillo interior pulsante -->
+        <div class="inner-glow"></div>
     </div>
     
     <!-- Scroll Indicator -->
@@ -85,7 +88,6 @@ get_header(); ?>
         <div class="scroll-indicator-text">Scroll</div>
     </div>
 </section>
-
 
 <!-- Projects Section -->
 <section class="projects-section">
@@ -162,7 +164,7 @@ get_header(); ?>
 
 <!-- About Section -->
 <section class="about-section">
-    <div class="about-image" style="background-image: url('<?php echo get_template_directory_uri(); ?>/images/about-bg.jpg');"></div>
+    <div class="about-image" style="background-image: url('https://c7estudio.esuntipazo.com/wp-content/uploads/2019/01/Residencia-Cerro-de-la-Luz-221-FHD-Render-9-scaled.png');"></div>
     
     <div class="about-content">
         <h2 class="fade-in">About Us</h2>
@@ -175,7 +177,9 @@ get_header(); ?>
             <div class="fade-in">
                 <?php echo wpautop(wp_trim_words($about_page->post_content, 80)); ?>
             </div>
-            <a href="<?php echo get_permalink($about_page->ID); ?>" class="btn-more"><?php _e('Learn More', 'asmobius'); ?></a>
+            <a href="<?php echo get_permalink($about_page->ID); ?>" class="btn-more" style="display: inline-block; margin-top: 30px; padding: 12px 40px; border: 1px solid #000; color: #000; text-decoration: none; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; transition: all 0.3s ease;">
+                <?php _e('Learn More', 'asmobius'); ?>
+            </a>
         <?php else : ?>
             <p class="fade-in">
                 <?php _e('We are a creative architecture studio dedicated to designing innovative and sustainable spaces that enhance the human experience.', 'asmobius'); ?>

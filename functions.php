@@ -8,7 +8,14 @@ function asmobius_setup() {
     // Add theme support
     add_theme_support('title-tag');
     add_theme_support('post-thumbnails');
-    add_theme_support('custom-logo');
+    // Soporte para logo personalizado con tamaño definido
+add_theme_support('custom-logo', array(
+    'height'      => 100,
+    'width'       => 200,
+    'flex-height' => true,
+    'flex-width'  => true,
+    'header-text' => array('site-title', 'site-description'),
+));
     add_theme_support('html5', array(
         'search-form',
         'comment-form',
@@ -31,8 +38,11 @@ add_action('after_setup_theme', 'asmobius_setup');
 
 // Enqueue Styles and Scripts
 function asmobius_scripts() {
+    // Google Fonts - Saira
+    wp_enqueue_style('asmobius-fonts', 'https://fonts.googleapis.com/css2?family=Saira:wght@100;200;300;400;500;600;700;800;900&display=swap', array(), null);
+    
     // Styles
-    wp_enqueue_style('asmobius-style', get_stylesheet_uri(), array(), '1.0.0');
+    wp_enqueue_style('asmobius-style', get_stylesheet_uri(), array('asmobius-fonts'), '1.0.0');
     
     // GSAP para animaciones avanzadas
     wp_enqueue_script('gsap', 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js', array(), '3.12.2', true);
