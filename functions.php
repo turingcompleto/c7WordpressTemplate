@@ -38,8 +38,11 @@ add_action('after_setup_theme', 'asmobius_setup');
 
 // Enqueue Styles and Scripts
 function asmobius_scripts() {
+    // Google Fonts - Saira
+    wp_enqueue_style('asmobius-fonts', 'https://fonts.googleapis.com/css2?family=Saira:wght@100;200;300;400;500;600;700;800;900&display=swap', array(), null);
+    
     // Styles
-    wp_enqueue_style('asmobius-style', get_stylesheet_uri(), array(), '1.0.0');
+    wp_enqueue_style('asmobius-style', get_stylesheet_uri(), array('asmobius-fonts'), '1.0.0');
     
     // GSAP para animaciones avanzadas
     wp_enqueue_script('gsap', 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js', array(), '3.12.2', true);

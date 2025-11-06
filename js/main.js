@@ -313,53 +313,52 @@
         const $currentSlide = slides.eq(currentSlideIndex);
         const $nextSlide = slides.eq(index);
         
-        // Agregar clases de transición
-        $currentSlide.addClass('liquid-transition-out transitioning-out');
-        $nextSlide.addClass('liquid-transition-in');
-        
+        // Transición crossfade muy suave tipo Asmobius
         if (typeof gsap !== 'undefined') {
-            // Transición líquida con GSAP
             const tl = gsap.timeline({
                 onComplete: function() {
-                    $currentSlide.removeClass('active liquid-transition-out transitioning-out');
-                    $nextSlide.removeClass('liquid-transition-in').addClass('active');
+                    $currentSlide.removeClass('active');
                     isTransitioning = false;
-                    
-                    // Limpiar efectos
-                    $('.liquid-circle, .water-ripple, .water-drops').remove();
                 }
             });
             
-            // Animación del slide actual (salida)
+            // Fade out muy suave del slide actual
             tl.to($currentSlide[0], {
-                duration: 1.5,
+                opacity: 0,
+                duration: 2,
                 ease: "power2.inOut"
             });
             
-            // Animación del siguiente slide (entrada)
-            tl.fromTo($nextSlide[0],
-                {
-                    opacity: 0
-                },
-                {
-                    opacity: 1,
-                    duration: 1.8,
-                    ease: "power2.inOut"
-                },
-                "-=1.2"
-            );
+            // Preparar el siguiente slide
+            tl.set($nextSlide[0], {
+                opacity: 0
+            }, 0);
+            
+            // Fade in del siguiente slide con overlap
+            tl.to($nextSlide[0], {
+                opacity: 1,
+                duration: 2,
+                ease: "power2.inOut",
+                onStart: function() {
+                    $nextSlide.addClass('active');
+                }
+            }, 0.5); // Overlap de 0.5s para transición más suave
             
         } else {
             // Fallback sin GSAP
+            $currentSlide.css({
+                'opacity': '0',
+                'transition': 'opacity 2s cubic-bezier(0.4, 0, 0.2, 1)'
+            });
+            
             setTimeout(function() {
-                $currentSlide.removeClass('active liquid-transition-out transitioning-out');
-                $nextSlide.removeClass('liquid-transition-in').addClass('active');
+                $currentSlide.removeClass('active');
+                $nextSlide.addClass('active').css('opacity', '1');
                 isTransitioning = false;
-                $('.liquid-circle, .water-ripple, .water-drops').remove();
-            }, 2000);
+            }, 1500);
         }
         
-        // Actualizar dots
+        // Actualizar dots con animación suave
         $('.hero-nav-dot').removeClass('active');
         $('.hero-nav-dot').eq(index).addClass('active');
         
@@ -382,7 +381,7 @@
         stopAutoPlay();
         autoPlayInterval = setInterval(function() {
             nextSlide();
-        }, 8000); // 8 segundos para apreciar el efecto líquido
+        }, 7000); // 7 segundos - timing elegante tipo Asmobius
     }
 
     function stopAutoPlay() {

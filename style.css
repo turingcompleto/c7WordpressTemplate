@@ -10,6 +10,9 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: asmobius
 */
 
+/* Google Fonts - Saira */
+@import url('https://fonts.googleapis.com/css2?family=Saira:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
 /* Reset & Base Styles */
 * {
     margin: 0;
@@ -23,10 +26,11 @@ Text Domain: asmobius
     --gray-light: #f5f5f5;
     --gray-medium: #cccccc;
     --transition-speed: 0.4s;
+    --font-family: 'Saira', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+    font-family: var(--font-family);
     color: var(--primary-black);
     background: var(--primary-white);
     line-height: 1.6;
@@ -315,6 +319,12 @@ body {
     background: #000;
 }
 
+.hero-slides-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
 .hero-slide {
     position: absolute;
     top: 0;
@@ -324,43 +334,56 @@ body {
     width: 100%;
     height: 100%;
     opacity: 0;
-    transition: opacity 1.5s ease-in-out;
+    visibility: hidden;
+    transition: opacity 2s cubic-bezier(0.4, 0, 0.2, 1),
+                visibility 2s cubic-bezier(0.4, 0, 0.2, 1);
     z-index: 1;
 }
 
 .hero-slide.active {
     opacity: 1;
+    visibility: visible;
     z-index: 2;
 }
 
-.hero-slide img {
+.hero-slide-image {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    min-width: 100%;
-    min-height: 100%;
-    width: auto;
-    height: auto;
-    max-width: none;
-    object-fit: cover;
-    object-position: center center;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    transform: scale(1);
+    transition: transform 20s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-/* Asegurar que la imagen cubra todo en pantallas panorámicas */
-@media (min-aspect-ratio: 16/9) {
-    .hero-slide img {
-        width: 100%;
-        height: auto;
-    }
+/* Ken Burns effect - zoom muy sutil */
+.hero-slide.active .hero-slide-image {
+    transform: scale(1.05);
 }
 
-/* Asegurar que la imagen cubra todo en pantallas verticales */
-@media (max-aspect-ratio: 16/9) {
-    .hero-slide img {
-        width: auto;
-        height: 100%;
-    }
+/* Overlay que se desvanece entre slides */
+.hero-slide::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.1) 0%,
+        rgba(0, 0, 0, 0.4) 100%
+    );
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 1.5s ease;
+}
+
+.hero-slide.active::before {
+    opacity: 1;
 }
 
 .hero-content {
@@ -371,21 +394,101 @@ body {
     color: var(--primary-white);
     z-index: 10;
     max-width: 700px;
-    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+}
+
+/* Animación de entrada del contenido */
+.hero-content > * {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hero-slide.active .hero-content > * {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.hero-slide.active .hero-content .hero-category {
+    transition-delay: 0.3s;
+}
+
+.hero-slide.active .hero-content h1 {
+    transition-delay: 0.5s;
+}
+
+.hero-slide.active .hero-content .hero-description {
+    transition-delay: 0.7s;
+}
+
+.hero-category {
+    display: block;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 15px;
+    font-weight: 400;
 }
 
 .hero-content h1 {
     font-size: 60px;
     font-weight: 300;
     margin-bottom: 20px;
-    letter-spacing: 3px;
+    letter-spacing: -1px;
     line-height: 1.2;
 }
 
+.hero-description,
 .hero-content p {
-    font-size: 18px;
+    font-size: 16px;
     line-height: 1.8;
-    letter-spacing: 1px;
+    letter-spacing: 0.5px;
+    color: rgba(255, 255, 255, 0.85);
+    font-weight: 300;
+}
+
+/* Navigation Dots - Estilo Asmobius */
+.hero-navigation {
+    position: absolute;
+    bottom: 50px;
+    left: 50px;
+    display: flex;
+    gap: 15px;
+    z-index: 15;
+}
+
+.hero-nav-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+}
+
+.hero-nav-dot::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+
+.hero-nav-dot:hover {
+    background: rgba(255, 255, 255, 0.5);
+    transform: scale(1.2);
+}
+
+.hero-nav-dot.active {
+    background: rgba(255, 255, 255, 0.95);
+    border-color: rgba(255, 255, 255, 0.95);
+    transform: scale(1.3);
 }
 
 .scroll-indicator {
@@ -393,10 +496,11 @@ body {
     bottom: 50px;
     right: 50px;
     writing-mode: vertical-rl;
-    font-size: 12px;
+    font-size: 11px;
     letter-spacing: 2px;
-    color: var(--primary-white);
+    color: rgba(255, 255, 255, 0.6);
     z-index: 10;
+    text-transform: uppercase;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     animation: bounce 2s infinite;
 }
