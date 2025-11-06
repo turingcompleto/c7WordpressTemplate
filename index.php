@@ -163,29 +163,42 @@ get_header(); ?>
 </section>
 
 <!-- About Section -->
+<?php 
+// Verificar si la sección debe mostrarse
+$show_about = get_theme_mod('about_show_section', true);
+if ($show_about) :
+    $about_title = get_theme_mod('about_title', 'About Us');
+    $about_content = get_theme_mod('about_content', 'We are a creative architecture studio dedicated to designing innovative and sustainable spaces that enhance the human experience.');
+    $about_image_id = get_theme_mod('about_image');
+    $about_button_text = get_theme_mod('about_button_text', 'Learn More');
+    $about_button_url = get_theme_mod('about_button_url', '');
+    
+    // Obtener URL de la imagen
+    $about_image_url = '';
+    if ($about_image_id) {
+        $about_image_url = wp_get_attachment_image_url($about_image_id, 'full');
+    } else {
+        // Imagen por defecto si no hay ninguna configurada
+        $about_image_url = 'https://c7estudio.esuntipazo.com/wp-content/uploads/2019/01/Residencia-Cerro-de-la-Luz-221-FHD-Render-9-scaled.png';
+    }
+?>
 <section class="about-section">
-    <div class="about-image" style="background-image: url('https://c7estudio.esuntipazo.com/wp-content/uploads/2019/01/Residencia-Cerro-de-la-Luz-221-FHD-Render-9-scaled.png');"></div>
+    <div class="about-image" style="background-image: url('<?php echo esc_url($about_image_url); ?>');"></div>
     
     <div class="about-content">
-        <h2 class="fade-in">About Us</h2>
+        <h2 class="fade-in"><?php echo esc_html($about_title); ?></h2>
         
-        <?php
-        // Get about page content
-        $about_page = get_page_by_path('about');
-        if ($about_page) :
-            ?>
-            <div class="fade-in">
-                <?php echo wpautop(wp_trim_words($about_page->post_content, 80)); ?>
-            </div>
-            <a href="<?php echo get_permalink($about_page->ID); ?>" class="btn-more" style="display: inline-block; margin-top: 30px; padding: 12px 40px; border: 1px solid #000; color: #000; text-decoration: none; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; transition: all 0.3s ease;">
-                <?php _e('Learn More', 'asmobius'); ?>
+        <div class="fade-in">
+            <?php echo wpautop($about_content); ?>
+        </div>
+        
+        <?php if ($about_button_url) : ?>
+            <a href="<?php echo esc_url($about_button_url); ?>" class="btn-more" style="display: inline-block; margin-top: 30px; padding: 12px 40px; border: 1px solid #000; color: #000; text-decoration: none; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; transition: all 0.3s ease;">
+                <?php echo esc_html($about_button_text); ?>
             </a>
-        <?php else : ?>
-            <p class="fade-in">
-                <?php _e('We are a creative architecture studio dedicated to designing innovative and sustainable spaces that enhance the human experience.', 'asmobius'); ?>
-            </p>
         <?php endif; ?>
     </div>
 </section>
+<?php endif; ?>
 
 <?php get_footer(); ?>
