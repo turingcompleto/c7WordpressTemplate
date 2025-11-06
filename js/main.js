@@ -14,6 +14,55 @@
     // ==========================================
     $(document).ready(function() {
         
+        // ==========================================
+        // SISTEMA DE LOGOS DINÁMICOS
+        // ==========================================
+        function switchLogo() {
+            const $lightLogo = $('.site-logo-image.light-logo');
+            const $darkLogo = $('.site-logo-image.dark-logo');
+            const $header = $('.site-header');
+            
+            // Si no hay logos dinámicos, salir
+            if ($lightLogo.length === 0 || $darkLogo.length === 0) {
+                return;
+            }
+            
+            const scrollTop = $(window).scrollTop();
+            const heroHeight = $('.hero-section').length ? $('.hero-section').outerHeight() : 0;
+            const hasHero = $('.hero-section').length > 0;
+            const isScrolled = scrollTop > 100;
+            
+            // Lógica del logo:
+            // 1. Si estamos EN el hero → Logo BLANCO
+            // 2. Si el header tiene .scrolled (fondo negro) → Logo BLANCO
+            // 3. Si no hay hero y no está scrolled → Logo OSCURO
+            
+            if (hasHero && scrollTop < heroHeight - 100) {
+                // Caso 1: Estamos en el hero
+                $lightLogo.addClass('active');
+                $darkLogo.removeClass('active');
+                $header.removeClass('on-light-bg');
+            } else if (isScrolled) {
+                // Caso 2: Header con scroll (fondo negro) → Logo BLANCO
+                $lightLogo.addClass('active');
+                $darkLogo.removeClass('active');
+                $header.addClass('on-light-bg'); // Mantener para el menú
+            } else {
+                // Caso 3: Fuera del hero, sin scroll → Logo OSCURO
+                $lightLogo.removeClass('active');
+                $darkLogo.addClass('active');
+                $header.addClass('on-light-bg');
+            }
+        }
+        
+        // Ejecutar al cargar
+        switchLogo();
+        
+        // Ejecutar al hacer scroll
+        $(window).on('scroll', function() {
+            switchLogo();
+        });
+        
         setTimeout(function() {
             initHeroSlider();
         }, 300);
