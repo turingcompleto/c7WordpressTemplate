@@ -218,6 +218,38 @@ add_action('save_post', 'asmobius_save_project_details');
 
 // Customizer Settings
 function asmobius_customize_register($wp_customize) {
+    // Logo Section
+    $wp_customize->add_section('asmobius_logos', array(
+        'title'    => __('Logos (Dark & Light)', 'asmobius'),
+        'priority' => 25,
+    ));
+
+    // Dark Logo (para fondos claros)
+    $wp_customize->add_setting('dark_logo', array(
+        'default'           => '',
+        'sanitize_callback' => 'absint',
+    ));
+
+    $wp_customize->add_control(new WP_Customize_Media_Control($wp_customize, 'dark_logo', array(
+        'label'       => __('Dark Logo', 'asmobius'),
+        'description' => __('Logo oscuro para usar en fondos claros (con textura)', 'asmobius'),
+        'section'     => 'asmobius_logos',
+        'mime_type'   => 'image',
+    )));
+
+    // Light Logo (para fondos oscuros)
+    $wp_customize->add_setting('light_logo', array(
+        'default'           => '',
+        'sanitize_callback' => 'absint',
+    ));
+
+    $wp_customize->add_control(new WP_Customize_Media_Control($wp_customize, 'light_logo', array(
+        'label'       => __('Light Logo', 'asmobius'),
+        'description' => __('Logo claro/blanco para usar en fondos oscuros (hero, header scrolled)', 'asmobius'),
+        'section'     => 'asmobius_logos',
+        'mime_type'   => 'image',
+    )));
+
     // Hero Section
     $wp_customize->add_section('asmobius_hero', array(
         'title'    => __('Hero Section', 'asmobius'),

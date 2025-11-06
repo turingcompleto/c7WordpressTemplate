@@ -4,7 +4,7 @@
  */
 get_header(); ?>
 
-<div class="page-wrapper" style="padding-top: 120px;">
+<div class="page-wrapper" style="padding-top: 160px;">
     <div class="projects-container">
         
         <!-- Page Title -->

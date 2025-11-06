@@ -395,9 +395,31 @@
     <div class="header-container">
         <div class="site-branding">
             <?php
-            if (has_custom_logo()) {
+            // Obtener los IDs de los logos personalizados
+            $dark_logo_id = get_theme_mod('dark_logo');
+            $light_logo_id = get_theme_mod('light_logo');
+            
+            // Si ambos logos están configurados, usar el sistema dinámico
+            if ($dark_logo_id && $light_logo_id) {
+                $dark_logo_url = wp_get_attachment_image_url($dark_logo_id, 'full');
+                $light_logo_url = wp_get_attachment_image_url($light_logo_id, 'full');
+                ?>
+                <a href="<?php echo esc_url(home_url('/')); ?>" class="dynamic-logo-link">
+                    <img src="<?php echo esc_url($light_logo_url); ?>" 
+                         alt="<?php bloginfo('name'); ?>" 
+                         class="site-logo-image light-logo active">
+                    <img src="<?php echo esc_url($dark_logo_url); ?>" 
+                         alt="<?php bloginfo('name'); ?>" 
+                         class="site-logo-image dark-logo">
+                </a>
+                <?php
+            }
+            // Si solo está el logo personalizado de WordPress
+            elseif (has_custom_logo()) {
                 the_custom_logo();
-            } else {
+            }
+            // Fallback al nombre del sitio
+            else {
                 ?>
                 <a href="<?php echo esc_url(home_url('/')); ?>" class="site-logo">
                     <?php bloginfo('name'); ?>
