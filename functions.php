@@ -277,6 +277,87 @@ function asmobius_customize_register($wp_customize) {
         'section'  => 'asmobius_hero',
         'type'     => 'textarea',
     ));
+
+    // About Section
+    $wp_customize->add_section('asmobius_about', array(
+        'title'    => __('About Us Section (Homepage)', 'asmobius'),
+        'priority' => 40,
+    ));
+
+    // About - Mostrar/Ocultar sección
+    $wp_customize->add_setting('about_show_section', array(
+        'default'           => true,
+        'sanitize_callback' => 'wp_validate_boolean',
+    ));
+
+    $wp_customize->add_control('about_show_section', array(
+        'label'    => __('Show About Section on Homepage', 'asmobius'),
+        'section'  => 'asmobius_about',
+        'type'     => 'checkbox',
+    ));
+
+    // About - Título
+    $wp_customize->add_setting('about_title', array(
+        'default'           => 'About Us',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+
+    $wp_customize->add_control('about_title', array(
+        'label'    => __('Section Title', 'asmobius'),
+        'section'  => 'asmobius_about',
+        'type'     => 'text',
+    ));
+
+    // About - Contenido
+    $wp_customize->add_setting('about_content', array(
+        'default'           => 'We are a creative architecture studio dedicated to designing innovative and sustainable spaces that enhance the human experience.',
+        'sanitize_callback' => 'wp_kses_post',
+    ));
+
+    $wp_customize->add_control('about_content', array(
+        'label'       => __('About Text', 'asmobius'),
+        'description' => __('Enter the text content for the about section', 'asmobius'),
+        'section'     => 'asmobius_about',
+        'type'        => 'textarea',
+    ));
+
+    // About - Imagen de fondo
+    $wp_customize->add_setting('about_image', array(
+        'default'           => '',
+        'sanitize_callback' => 'absint',
+    ));
+
+    $wp_customize->add_control(new WP_Customize_Media_Control($wp_customize, 'about_image', array(
+        'label'       => __('Background Image', 'asmobius'),
+        'description' => __('Upload an image for the about section background', 'asmobius'),
+        'section'     => 'asmobius_about',
+        'mime_type'   => 'image',
+    )));
+
+    // About - Texto del botón
+    $wp_customize->add_setting('about_button_text', array(
+        'default'           => 'Learn More',
+        'sanitize_callback' => 'sanitize_text_field',
+    ));
+
+    $wp_customize->add_control('about_button_text', array(
+        'label'    => __('Button Text', 'asmobius'),
+        'section'  => 'asmobius_about',
+        'type'     => 'text',
+    ));
+
+    // About - URL del botón
+    $wp_customize->add_setting('about_button_url', array(
+        'default'           => '',
+        'sanitize_callback' => 'esc_url_raw',
+    ));
+
+    $wp_customize->add_control('about_button_url', array(
+        'label'       => __('Button URL', 'asmobius'),
+        'description' => __('Enter the full URL (e.g., https://example.com/about) or leave empty to hide button', 'asmobius'),
+        'section'     => 'asmobius_about',
+        'type'        => 'url',
+    ));
 }
 add_action('customize_register', 'asmobius_customize_register');
 
